@@ -1,0 +1,203 @@
+/* ==========================================================================
+   VARIABLES GLOBALES
+   ========================================================================== */
+:root {
+    /* Colores de Fondo */
+    --bg-deep: #0f172a;
+    --bg-gradient: linear-gradient(135deg, #0f172a, #1e293b);
+    
+    /* Colores de Marca */
+    --primary: #6366f1;       /* Violeta principal */
+    --primary-hover: #4f46e5; /* Violeta oscuro para hover */
+    
+    /* Colores de Texto */
+    --text-high: #f8fafc;     /* Blanco brillante */
+    --text-low: #94a3b8;      /* Gris azulado para subtítulos */
+    
+    /* Efecto Glassmorphism */
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --glass-blur: 14px;
+    
+    /* Animaciones */
+    --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ==========================================================================
+   RESET Y BASE
+   ========================================================================== */
+body {
+    background: var(--bg-gradient);
+    color: var(--text-high);
+    font-family: 'Poppins', sans-serif;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ==========================================================================
+   ESTILOS DETERMINADOS PARA EL NAVBAR GLOBAL
+   ========================================================================== */
+.navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 5%;
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border-bottom: 1px solid var(--glass-border);
+    transition: var(--transition);
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 35px;
+    margin: 0;
+    align-items: center;
+}
+
+.nav-links li {
+    position: relative;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--text-low);
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 8px 0;
+    transition: color 0.3s ease;
+}
+
+/* ===== ANIMACIÓN DE LA LÍNEA AMARILLA AL PASAR EL CURSOR ===== */
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0; /* Empieza en 0 */
+    height: 2px;
+    background-color: var(--accent-yellow);
+    box-shadow: 0 0 8px var(--accent-yellow); /* Brillo sutil */
+    transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-links a:hover {
+    color: var(--text-high);
+}
+
+.nav-links a:hover::after {
+    width: 100%; /* Se expande al 100% al pasar el curso */
+}
+
+/* ===== ESTADO ACTIVO (Diferente al Hover) ===== */
+.nav-links a.active {
+    color: var(--primary);
+}
+
+.nav-links a.active::after {
+    width: 100%;
+    background-color: var(--primary); /* El activo se queda en violeta */
+    box-shadow: 0 0 8px var(--primary);
+}
+
+/* ==========================================================================
+   COMPONENTES: PROYECTOS (CARDS)
+   ========================================================================== */
+
+/* Contenedor Glassmorphism */
+.glass {
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur)); /* Soporte Safari */
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 25px;
+    transition: var(--transition);
+}
+
+/* Efecto Hover en la Tarjeta */
+.project-card:hover {
+    transform: translateY(-10px); /* Eleva la tarjeta */
+    border-color: var(--primary);  /* Brillo violeta en el borde */
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+}
+
+/* Contenedor de Imagen de Proyecto */
+.project-img-placeholder {
+    width: 100%;
+    aspect-ratio: 16 / 9; /* Mantiene proporción de video/imagen */
+    background: #000;
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+}
+
+.img-inner {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, #1e293b, #334155);
+    transition: var(--transition);
+}
+
+.project-card:hover .img-inner {
+    transform: scale(1.1); /* Efecto zoom en la imagen al hacer hover */
+}
+
+/* ==========================================================================
+   TEXTOS Y BOTONES
+   ========================================================================== */
+.hero-title {
+    font-size: clamp(2rem, 5vw, 3.5rem); /* Tamaño fluido según pantalla */
+    font-weight: 700;
+}
+
+.hero-title span {
+    color: var(--primary);
+}
+
+.submit {
+    background: var(--primary);
+    color: white;
+    padding: 12px;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: var(--transition);
+    border: none;
+}
+
+.submit:hover {
+    background: var(--primary-hover);
+    box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
+}
+
+@media (max-width: 992px) {
+    .menu-toggle {
+        display: flex; /* Aparece la hamburguesa */
+        z-index: 1001;
+    }
+
+    .nav-links {
+        position: fixed;
+        top: 0;
+        right: -100%; /* Escondido a la derecha */
+        width: 100%;
+        height: 100vh;
+        background: rgba(15, 23, 42, 0.95); /* Fondo sólido oscuro */
+        backdrop-filter: blur(20px);
+        flex-direction: column;
+        justify-content: center;
+        transition: 0.5s ease-in-out;
+        z-index: 1000;
+    }
+
+    .nav-links.show {
+        right: 0; /* Aparece al activar */
+    }
+
+    /* Transformación de hamburguesa a X */
+    .menu-toggle.active .bar:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+    .menu-toggle.active .bar:nth-child(2) { opacity: 0; }
+    .menu-toggle.active .bar:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
+}
