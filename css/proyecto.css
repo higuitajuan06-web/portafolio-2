@@ -37,69 +37,91 @@ body {
 /* ==========================================================================
    ESTILOS DETERMINADOS PARA EL NAVBAR GLOBAL
    ========================================================================== */
+   .menu-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+}
+
+.menu-toggle .bar {
+    width: 25px;
+    height: 3px;
+    background-color: white;
+    transition: 0.4s;
+}
+
 .navbar-container {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     align-items: center;
-    padding: 1.2rem 5%;
-    background: var(--glass-bg);
-    backdrop-filter: blur(var(--glass-blur));
-    -webkit-backdrop-filter: blur(var(--glass-blur));
-    border-bottom: 1px solid var(--glass-border);
-    transition: var(--transition);
+    padding: 20px 50px;
+    background: transparent; /* O puedes usar el color oscuro del body */
+}
+
+/* Estilo del Logo */
+.brand .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 0;
+    color: #fff;
+}
+
+.brand .slogan {
+    font-size: 0.85rem;
+    color: #a0a0a0;
+    display: block;
+}
+
+/* Lista de Enlaces */
+.menu-toggle.active .bar:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+}
+
+.menu-toggle.active .bar:nth-child(2) {
+    opacity: 0;
+}
+
+.menu-toggle.active .bar:nth-child(3) {
+    transform: rotate(-45deg) translate(6px, -6px);
 }
 
 .nav-links {
     display: flex;
     list-style: none;
-    gap: 35px;
+    gap: 30px;
     margin: 0;
-    align-items: center;
-}
-
-.nav-links li {
-    position: relative;
 }
 
 .nav-links a {
     text-decoration: none;
-    color: var(--text-low);
-    font-size: 1rem;
-    font-weight: 500;
-    padding: 8px 0;
+    color: #fff;
+    font-size: 0.95rem;
+    position: relative; /* Necesario para la línea */
+    padding: 5px 0;
     transition: color 0.3s ease;
 }
 
-/* ===== ANIMACIÓN DE LA LÍNEA AMARILLA AL PASAR EL CURSOR ===== */
+/* La línea amarilla/naranja (Estado normal: oculta) */
 .nav-links a::after {
     content: '';
     position: absolute;
+    width: 0;
+    height: 2px;
     bottom: 0;
     left: 0;
-    width: 0; /* Empieza en 0 */
-    height: 2px;
-    background-color: var(--accent-yellow);
-    box-shadow: 0 0 8px var(--accent-yellow); /* Brillo sutil */
-    transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    background-color: #f39c12; /* Color naranja/amarillo de la imagen */
+    transition: width 0.3s ease;
+}
+
+/* Efecto al pasar el cursor y estado activo */
+.nav-links a:hover::after,
+.nav-links a.active::after {
+    width: 100%;
 }
 
 .nav-links a:hover {
-    color: var(--text-high);
-}
-
-.nav-links a:hover::after {
-    width: 100%; /* Se expande al 100% al pasar el curso */
-}
-
-/* ===== ESTADO ACTIVO (Diferente al Hover) ===== */
-.nav-links a.active {
-    color: var(--primary);
-}
-
-.nav-links a.active::after {
-    width: 100%;
-    background-color: var(--primary); /* El activo se queda en violeta */
-    box-shadow: 0 0 8px var(--primary);
+    color: #f39c12;
 }
 
 /* ==========================================================================
@@ -148,6 +170,56 @@ body {
 /* ==========================================================================
    TEXTOS Y BOTONES
    ========================================================================== */
+
+/* HERO */
+.hero {
+    padding: 120px 5% 80px;
+    background: var(--bg-gradient);
+}
+
+.hero-container {
+    max-width: 1200px;
+    margin: auto;
+}
+
+.hero-title {
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+.hero-title span {
+    color: var(--primary);
+}
+
+.hero-subtitle {
+    color: var(--text-low);
+    max-width: 600px;
+    line-height: 1.6;
+}
+
+/* NAVBAR */
+.navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 5%;
+    position: relative;
+}
+
+/* RESPONSIVE */
+@media (max-width: 992px) {
+
+    .hero {
+        padding-top: 140px;
+        text-align: center;
+    }
+
+    .hero-subtitle {
+        margin: auto;
+    }
+}
+
 .hero-title {
     font-size: clamp(2rem, 5vw, 3.5rem); /* Tamaño fluido según pantalla */
     font-weight: 700;
@@ -173,31 +245,32 @@ body {
 }
 
 @media (max-width: 992px) {
+
+    .navbar-container {
+        justify-content: space-between;
+    }
+
     .menu-toggle {
-        display: flex; /* Aparece la hamburguesa */
+        display: flex;
         z-index: 1001;
     }
 
     .nav-links {
         position: fixed;
         top: 0;
-        right: -100%; /* Escondido a la derecha */
-        width: 100%;
+        right: -100%;
+        width: 70%;
         height: 100vh;
-        background: rgba(15, 23, 42, 0.95); /* Fondo sólido oscuro */
-        backdrop-filter: blur(20px);
+        background: var(--bg-deep);
         flex-direction: column;
+        align-items: center;
         justify-content: center;
-        transition: 0.5s ease-in-out;
+        gap: 40px;
+        transition: 0.5s ease;
         z-index: 1000;
     }
 
     .nav-links.show {
-        right: 0; /* Aparece al activar */
+        right: 0;
     }
-
-    /* Transformación de hamburguesa a X */
-    .menu-toggle.active .bar:nth-child(1) { transform: translateY(9px) rotate(45deg); }
-    .menu-toggle.active .bar:nth-child(2) { opacity: 0; }
-    .menu-toggle.active .bar:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
 }

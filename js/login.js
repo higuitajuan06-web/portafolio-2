@@ -1,4 +1,68 @@
 document.addEventListener('DOMContentLoaded', () => {
+
+    const githubURL = "https://github.com/TU_USUARIO/TU_REPO";
+
+    // REGISTRO
+    document.getElementById('btn-submit-register').addEventListener('click', () => {
+
+        const email = document.getElementById('register-email').value;
+        const password = document.getElementById('register-password').value;
+
+        if (!email || !password) {
+            Swal.fire('Error', 'Please fill all fields', 'error');
+            return;
+        }
+
+        // Guardar en localStorage
+        const user = { email, password };
+        localStorage.setItem('devcodeUser', JSON.stringify(user));
+
+        Swal.fire({
+            title: 'Success!',
+            text: 'Account created successfully!',
+            icon: 'success'
+        }).then(() => {
+            window.location.href = githubURL;
+        });
+
+    });
+
+    // LOGIN
+    document.getElementById('btn-submit-login').addEventListener('click', () => {
+
+        const email = document.getElementById('login-email').value;
+        const password = document.getElementById('login-password').value;
+
+        const savedUser = JSON.parse(localStorage.getItem('devcodeUser'));
+
+        if (!savedUser) {
+            Swal.fire('Error', 'No user registered yet', 'error');
+            return;
+        }
+
+        if (email === savedUser.email && password === savedUser.password) {
+            Swal.fire({
+                title: 'Welcome Back!',
+                text: 'Login successful!',
+                icon: 'success'
+            }).then(() => {
+                window.location.href = githubURL;
+            });
+        } else {
+            Swal.fire('Error', 'Incorrect email or password', 'error');
+        }
+
+    });
+
+});
+
+
+
+
+
+
+/*/
+document.addEventListener('DOMContentLoaded', () => {
     // 1. Elementos de la interfaz
     const sectionRegister = document.getElementById('section-register');
     const sectionLogin = document.getElementById('section-login');
@@ -59,4 +123,40 @@ document.addEventListener('DOMContentLoaded', () => {
             confirmButtonText: 'Continue'
         });
     });
-});
+
+
+    });const githubURL = "https://github.com/higuitajuan06-web?tab=repositories";
+
+    // 4. Manejo de SweetAlert2 para Registro
+    document.getElementById('btn-submit-register').addEventListener('click', () => {
+
+        Swal.fire({
+            title: 'Success!',
+            text: 'Account created successfully. Welcome to Dev_Code!',
+            icon: 'success',
+            confirmButtonColor: '#00adb5',
+            confirmButtonText: 'Go to Repository'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = githubURL;
+            }
+        });
+
+    });
+
+    // 5. Manejo de SweetAlert2 para Login
+    document.getElementById('btn-submit-login').addEventListener('click', () => {
+
+        Swal.fire({
+            title: 'Welcome Back!',
+            text: 'You have logged in successfully.',
+            icon: 'info',
+            confirmButtonColor: '#00adb5',
+            confirmButtonText: 'Go to Repository'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = githubURL;
+            }
+        });
+
+/*/
